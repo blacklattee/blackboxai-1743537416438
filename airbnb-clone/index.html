@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vacation Homes & Condo Rentals - Airbnb Clone</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Use Font Awesome icon as favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'><path fill='%23FF385C' d='M224 373.12c-25.24-31.67-40.08-59.43-45-83.18-22.55-88 112.61-88 90.06 0-5.45 24.25-20.29 52-45 83.18zm138.15 73.23c-42.06 18.31-83.67-10.88-119.3-50.47 103.9-130.07 46.11-200-18.85-200-54.92 0-85.16 46.51-73.28 100.5 6.93 29.19 25.23 62.39 54.43 99.5-32.53 36.05-60.55 52.69-85.15 54.92-50 7.43-89.11-41.06-71.3-91.09 15.1-39.16 111.72-231.18 115.87-241.56 15.75-30.07 25.56-57.4 59.38-57.4 32.34 0 43.4 25.94 60.37 59.87 36 70.62 89.35 177.48 114.84 239.09 13.17 33.07-1.37 71.29-37.01 86.64zm47-136.12C280.27 35.93 273.13 32 224 32c-45.52 0-64.87 31.67-84.66 72.79C33.18 317.1 22.89 347.19 22 349.81-3.22 419.14 48.74 480 111.63 480c21.71 0 60.61-6.06 112.37-62.4 58.68 63.78 101.26 62.4 112.37 62.4 62.89.05 114.85-60.86 89.61-130.19.02-3.89-16.82-38.9-16.82-39.58z'/></svg>">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'airbnb': '#FF385C',
+                        'airbnb-dark': '#D70466'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .mobile-menu {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        .listing-card:hover img {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+        }
+        .listing-card img {
+            transition: transform 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 p-4">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-lg">Menu</h3>
+            <button class="close-menu text-2xl">&times;</button>
+        </div>
+        <nav class="space-y-4">
+            <a href="#" class="block py-2 hover:bg-gray-100 rounded-lg px-4">Home</a>
+            <a href="#" class="block py-2 hover:bg-gray-100 rounded-lg px-4">Places to stay</a>
+            <a href="#" class="block py-2 hover:bg-gray-100 rounded-lg px-4">Experiences</a>
+            <a href="#" class="block py-2 hover:bg-gray-100 rounded-lg px-4">Online Experiences</a>
+        </nav>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed w-full bg-white shadow-sm z-40">
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center cursor-pointer transform hover:scale-105 transition duration-200">
+                <i class="fab fa-airbnb text-airbnb text-4xl"></i>
+                <span class="text-airbnb font-bold text-xl ml-2">airbnb</span>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="hidden md:flex items-center shadow-sm border rounded-full px-4 py-2 hover:shadow-md transition duration-200 cursor-pointer">
+                <input type="text" placeholder="Start your search" class="outline-none bg-transparent w-64">
+                <button class="bg-airbnb text-white p-2 rounded-full ml-4 hover:bg-airbnb-dark transition duration-200 transform hover:scale-105">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <!-- Right Navigation -->
+            <div class="flex items-center space-x-4">
+                <a href="#" class="hidden md:block hover:bg-gray-100 px-4 py-2 rounded-full transition duration-200">Become a Host</a>
+                <button class="hover:bg-gray-100 p-2 rounded-full transition duration-200">
+                    <i class="fas fa-globe"></i>
+                </button>
+                <button class="flex items-center space-x-2 border rounded-full p-2 hover:shadow-md transition duration-200">
+                    <i class="fas fa-bars"></i>
+                    <i class="fas fa-user-circle text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 px-4">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">Not sure where to go? Perfect.</h1>
+            <button class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-xl transition duration-200 transform hover:scale-105 animate-fade-in">
+                I'm flexible
+            </button>
+        </div>
+    </section>
+
+    <!-- Featured Listings -->
+    <section class="py-12 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-2xl font-bold mb-8">Inspiration for your next trip</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Listing Cards with hover effect class -->
+                <div class="listing-card rounded-xl overflow-hidden hover:shadow-lg transition duration-200">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Beachfront villa" 
+                             class="w-full h-64 object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold">Beachfront Villa</h3>
+                        <p class="text-gray-600">4.95 (120 reviews)</p>
+                        <p class="mt-2"><span class="font-bold">$250</span> / night</p>
+                    </div>
+                </div>
+
+                <div class="listing-card rounded-xl overflow-hidden hover:shadow-lg transition duration-200">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Modern apartment" 
+                             class="w-full h-64 object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold">Modern Apartment</h3>
+                        <p class="text-gray-600">4.92 (85 reviews)</p>
+                        <p class="mt-2"><span class="font-bold">$180</span> / night</p>
+                    </div>
+                </div>
+
+                <div class="listing-card rounded-xl overflow-hidden hover:shadow-lg transition duration-200">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Mountain cabin" 
+                             class="w-full h-64 object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold">Mountain Cabin</h3>
+                        <p class="text-gray-600">4.88 (95 reviews)</p>
+                        <p class="mt-2"><span class="font-bold">$150</span> / night</p>
+                    </div>
+                </div>
+
+                <div class="listing-card rounded-xl overflow-hidden hover:shadow-lg transition duration-200">
+                    <div class="overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                             alt="Luxury condo" 
+                             class="w-full h-64 object-cover">
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold">Luxury Condo</h3>
+                        <p class="text-gray-600">4.97 (150 reviews)</p>
+                        <p class="mt-2"><span class="font-bold">$300</span> / night</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-12 px-4 bg-gray-100">
+        <div class="container mx-auto">
+            <h2 class="text-2xl font-bold mb-8">Discover Airbnb Experiences</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="relative rounded-2xl overflow-hidden hover:shadow-xl transition duration-200 transform hover:scale-[1.02]">
+                    <img src="https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                         alt="Things to do" 
+                         class="w-full h-96 object-cover">
+                    <div class="absolute bottom-0 left-0 p-8 text-white">
+                        <h3 class="text-3xl font-bold mb-4">Things to do on your trip</h3>
+                        <button class="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-200">Experiences</button>
+                    </div>
+                </div>
+                <div class="relative rounded-2xl overflow-hidden hover:shadow-xl transition duration-200 transform hover:scale-[1.02]">
+                    <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                         alt="Online Experiences" 
+                         class="w-full h-96 object-cover">
+                    <div class="absolute bottom-0 left-0 p-8 text-white">
+                        <h3 class="text-3xl font-bold mb-4">Things to do from home</h3>
+                        <button class="bg-white text-black px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-200">Online Experiences</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 border-t mt-12">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="font-bold mb-4">About</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:underline">How Airbnb works</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Newsroom</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Investors</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">Community</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:underline">Diversity & Belonging</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Accessibility</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Guest Referrals</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Gift cards</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">Host</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:underline">Host your home</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Host an experience</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Responsible hosting</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Resource Center</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-600 hover:underline">Help Center</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Cancellation options</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Neighborhood Support</a></li>
+                        <li><a href="#" class="text-gray-600 hover:underline">Trust & Safety</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-600 mb-4 md:mb-0">
+                    © 2024 Airbnb Clone, Inc. All rights reserved
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-200"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-200"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-600 hover:text-gray-900 transition duration-200"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const menuButton = document.querySelector('.fa-bars').parentElement;
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const closeMenu = document.querySelector('.close-menu');
+
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        // Search bar focus effect
+        const searchBar = document.querySelector('input[type="text"]');
+        if (searchBar) {
+            searchBar.addEventListener('focus', () => {
+                searchBar.parentElement.classList.add('shadow-md');
+            });
+            searchBar.addEventListener('blur', () => {
+                searchBar.parentElement.classList.remove('shadow-md');
+            });
+        }
+
+        // Image error handling
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', function() {
+                this.src = 'https://via.placeholder.com/800x600?text=Image+Not+Available';
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !menuButton.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
